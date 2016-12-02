@@ -36,6 +36,10 @@
                                     <div class="modal-dialog modal-sm" role="newUser">
                                         <div class="modal-content">
                                             <address>
+                                                <strong>Username:</strong> <br>
+                                                    ${userNotAuthorization.username}
+                                            </address>
+                                            <address>
                                                 <strong>Имя:</strong> <br>
                                                     ${userNotAuthorization.name}
                                             </address>
@@ -67,11 +71,11 @@
                                             <div class="row">
                                                 <div class="col-md-6"><a
                                                         href="/admin/userControl/add/${userNotAuthorization.id}"
-                                                        onclick="return confirm('Авторизировать ${userNotAuthorization.id}?')">Авторизировать</a>
+                                                        onclick="return confirm('Авторизировать ${userNotAuthorization.username}?')">Авторизировать</a>
                                                 </div>
                                                 <div class="col-md-6"><a
                                                         href="/admin/userControl/delete/${userNotAuthorization.id}"
-                                                        onclick="return confirm('Удалить ${userNotAuthorization.id}?')">Удалить</a>
+                                                        onclick="return confirm('Удалить ${userNotAuthorization.username}?')">Удалить</a>
                                                 </div>
 
                                             </div>
@@ -126,6 +130,10 @@
                                     <div class="modal-dialog modal-sm" role="user">
                                         <div class="modal-content">
                                             <address>
+                                                <strong>Username:</strong> <br>
+                                                    ${user.username}
+                                            </address>
+                                            <address>
                                                 <strong>Имя:</strong> <br>
                                                     ${user.name}
                                             </address>
@@ -156,11 +164,11 @@
 
                                             <div class="row">
                                                 <div class="col-md-6"><a href="/admin/userControl/ban/${user.id}"
-                                                                         onclick="return confirm('Заблокировать ${user.id}?')">Заблокировать</a>
+                                                                         onclick="return confirm('Заблокировать ${user.username}?')">Заблокировать</a>
                                                 </div>
                                                 <div class="col-md-6"><a
                                                         href="/admin/userControl/delete/${user.id}"
-                                                        onclick="return confirm('Удалить ${user.id}?')">Удалить</a>
+                                                        onclick="return confirm('Удалить ${user.username}?')">Удалить</a>
                                                 </div>
                                             </div>
                                         </div>
