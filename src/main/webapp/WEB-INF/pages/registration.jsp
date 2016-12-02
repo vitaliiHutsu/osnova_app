@@ -31,14 +31,15 @@
                 <div class="row">
                     <div class="col-md-4 hidden-sm hidden-xs"></div>
                     <div class="col-md-4">
-                        <form:form modelAttribute="user" cssClass="form-signin" method="post">
+                        <form:form modelAttribute="user" autocomplete="false" cssClass="form-signin" method="post">
                             <h2 class="form-signin-heading">Новый пользователь:</h2>
 
 
                             <spring:bind path="username">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="username" class="form-control" placeholder="Username"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="username"></form:errors>
                                 </div>
                             </spring:bind>
@@ -46,7 +47,8 @@
                             <spring:bind path="name">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="name" class="form-control" placeholder="Имя"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="name"></form:errors>
                                 </div>
                             </spring:bind>
@@ -54,7 +56,8 @@
                             <spring:bind path="surname">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="surname" class="form-control" placeholder="Фамилия"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="surname"></form:errors>
                                 </div>
                             </spring:bind>
@@ -62,7 +65,8 @@
                             <spring:bind path="phone">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="phone" class="form-control" placeholder="Телефон"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="phone"></form:errors>
                                 </div>
                             </spring:bind>
@@ -70,7 +74,8 @@
                             <spring:bind path="email">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="email" class="form-control" placeholder="E-mail"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="email"></form:errors>
                                 </div>
                             </spring:bind>
@@ -78,7 +83,8 @@
                             <spring:bind path="position">
                                 <div class="form-group ${status.error ? 'has-error' : ''}">
                                     <form:input type="text" path="position" class="form-control" placeholder="Должность"
-                                                autofocus="true"></form:input>
+                                                autofocus="true"
+                                                autocomplete="false"></form:input>
                                     <form:errors cssClass="error" path="position"></form:errors>
                                 </div>
                             </spring:bind>
@@ -86,8 +92,9 @@
                             <spring:bind path="password">
                                 <div class="form-group ${status.error ? 'has-error' : ''} ${flagErrorPass ? 'has-error' : ''}">
                                     <form:password path="password" class="form-control"
-                                                placeholder="Пароль"
-                                                autofocus="true"></form:password>
+                                                   placeholder="Пароль"
+                                                   autofocus="true"
+                                                   autocomplete="false"></form:password>
                                     <form:errors cssClass="error" path="password"></form:errors>
                                     <h5 class="error">${messageError}</h5>
                                 </div>

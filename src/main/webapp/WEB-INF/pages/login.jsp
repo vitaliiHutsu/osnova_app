@@ -50,16 +50,16 @@
                                 </div>
                             </c:if>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">username:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputEmail3" name="username"
-                                           placeholder="Login">
+                                    <input type="text" autocomplete="off" class="form-control" id="inputEmail3" name="username"
+                                           placeholder="username">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <label for="inputPassword3" class="col-sm-2 control-label">password:</label>
                                 <div class="col-sm-10">
-                                    <input type="password" name="password" class="form-control" id="inputPassword3"
+                                    <input autocomplete="off" type="password" name="password" class="form-control" id="inputPassword3"
                                            placeholder="Password">
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                             <c:if test="${flagRegistr || lostPasswordFlag}">
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-12">
-                                        <h5 class="error">Ожидайте письма на E-mail</h5>
+                                        <h5 class="error">Ожидайте письмо на E-mail</h5>
                                     </div>
 
                                 </div>
