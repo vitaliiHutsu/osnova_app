@@ -21,6 +21,10 @@ a{
     transition: 0.3s;
 
 }
+
+input{
+    text-transform: lowercase !important;
+}
 header a:hover{
     color: silver !important;
 }

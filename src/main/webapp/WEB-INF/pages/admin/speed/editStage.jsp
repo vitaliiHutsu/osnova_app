@@ -88,6 +88,9 @@
         <div class="row">
             <div class="col-md-12">
                 <button type="submit" class="btn btn-default">Изменить</button>
+                <div class="form-group">
+                    <input type="checkbox" name="sendMessage" value="true">Отослать сообщение?
+                </div>
             </div>
         </div>
     </form:form>

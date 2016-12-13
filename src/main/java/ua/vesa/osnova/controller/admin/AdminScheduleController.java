@@ -19,6 +19,7 @@ import ua.vesa.osnova.speed.station.service.StationService;
 import ua.vesa.osnova.user.model.User;
 import ua.vesa.osnova.user.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -251,7 +252,8 @@ public class AdminScheduleController {
     }
 
     @RequestMapping(value = "/addNewSchedule", method = RequestMethod.POST)
-    public ModelAndView addNewSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result) {
+    public ModelAndView addNewSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result,
+                                       HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("admin/schedule/newSchedule");
@@ -271,15 +273,19 @@ public class AdminScheduleController {
 
             informTable.setTitle(String.valueOf(scheduleService.getLastId()));
             informTableService.add(informTable);
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (User user : userService.getAll()){
-                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+
+            if (Boolean.valueOf(request.getParameter("sendMessage"))) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (User user : userService.getAll()) {
+                            mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                        }
                     }
-                }
-            });
-            thread.start();
+                });
+                thread.start();
+            }
+
         }
         modelAndView.setViewName("redirect:/admin/schedule");
         return modelAndView;
@@ -301,7 +307,7 @@ public class AdminScheduleController {
     }
 
     @RequestMapping(value = "/updateSchedule", method = RequestMethod.POST)
-    public ModelAndView editSchedule(@ModelAttribute("schedule") Schedule schedule) {
+    public ModelAndView editSchedule(@ModelAttribute("schedule") Schedule schedule, HttpServletRequest request) {
         for (int i = 0; i < schedule.getDepartureAndArrivals().size(); i++) {
             schedule.getDepartureAndArrivals().get(i).setStation(stationTmp.get(i));
         }
@@ -313,12 +319,12 @@ public class AdminScheduleController {
         InformTable informTable = informTableService.getByTitle((String.valueOf(editScheduleTmp.getId())));
         if (informTable != null)
             informTableService.remove(informTable);
-        informAdd();
+        informAdd(Boolean.valueOf(request.getParameter("sendMessage")));
         return modelAndView;
 
     }
 
-    private void informAdd() {
+    private void informAdd(boolean b) {
         informTable = new InformTable();
         final String msg = "изменения в расписании п. № " + editScheduleTmp.getNumber_train();
         informTable.setAction(msg);
@@ -326,15 +332,20 @@ public class AdminScheduleController {
         informTable.setTitle(String.valueOf(editScheduleTmp.getId()));
         informTable.setName_table(TableNameApp.SCHEDULE_TABLE);
         informTableService.add(informTable);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (User user : userService.getAll()){
-                    mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+
+        if(b) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (User user : userService.getAll()) {
+                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                    }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
+
+
     }
 
     @RequestMapping(value = "/deleteSchedule/{id}", method = RequestMethod.GET)

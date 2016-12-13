@@ -147,7 +147,11 @@
     <c:if test="${flagEdit}">
         <button type="submit" formaction="/admin/speed/editStation" class="btn btn-default">Изменить</button>
         <button type="submit" formaction="/admin/speed/deleteStation" class="btn btn-default">Удалить</button>
+        <div class="form-group">
+            <input type="checkbox" name="sendMessage" value="true">Отослать сообщение?
+        </div>
     </c:if>
+
     </form:form>
 </div>
 </div>

@@ -20,6 +20,7 @@ import ua.vesa.osnova.speed.utils.StageUtils;
 import ua.vesa.osnova.user.model.User;
 import ua.vesa.osnova.user.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -87,7 +88,7 @@ public class AdminSpeedController {
     }
 
     @RequestMapping(value = "/editStation", method = RequestMethod.POST)
-    public ModelAndView editStation(@ModelAttribute("station") Station station) {
+    public ModelAndView editStation(@ModelAttribute("station") Station station, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         this.station.setNotation(station.getNotation());
         this.station.setSpeed_chief_even_pass(station.getSpeed_chief_even_pass());
@@ -107,15 +108,17 @@ public class AdminSpeedController {
         informTable.setName_table(TableNameApp.STATION_SPEED_TABLE);
         informTable.setTitle(this.station.getTitle_station());
         informTableService.add(informTable);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (User user : userService.getAll()){
-                    mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+        if (Boolean.valueOf(request.getParameter("sendMessage"))) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (User user : userService.getAll()) {
+                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                    }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
         stationService.update(this.station);
         modelAndView.setViewName("redirect:/admin/speed");
         return modelAndView;
@@ -216,7 +219,7 @@ public class AdminSpeedController {
     }
 
     @RequestMapping(value = "/editStage/{id}", method = RequestMethod.POST)
-    public ModelAndView editStage(@ModelAttribute("stage") Stage stage) {
+    public ModelAndView editStage(@ModelAttribute("stage") Stage stage, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/speed/editRouteSpeed/" + idSelectRouteSpeedEdit);
 
         informTable = informTableService.getByTitle(String.valueOf(stageUpdate.getStage_uniq()));
@@ -230,15 +233,18 @@ public class AdminSpeedController {
         informTable.setName_table(TableNameApp.STAGE_SPEED_TABLE);
         informTable.setTitle(String.valueOf(stageUpdate.getStage_uniq())); //Хранения title в таблице inform stage по уникальному ключу uniq_station
         informTableService.add(informTable);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (User user : userService.getAll()){
-                    mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+
+        if (Boolean.valueOf(request.getParameter("sendMessage"))) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (User user : userService.getAll()) {
+                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                    }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
         stageService.update(stage);
         return modelAndView;
     }

@@ -13,22 +13,27 @@ import java.io.*;
 
 @Component
 public class FileOIUtils {
-
-    public static final String OS = "windows";
-    //
     @Autowired
     private ServletContext context;
     private File file;
 
     private File getFile() {
 
+        String urlFile = System.getProperty("user.home") + File.separator + "document";
+        File file = new File(urlFile);
+        if (!file.exists()) {
+            file.mkdirs();
+//            System.out.println("Файл создан");
+        }else {
+//            System.out.println("Есть такой файл");
+        }
 
-//        return new File("/usr/documents/");
-        return new File(context.getRealPath("/WEB-INF/documents/"));
+        return file;
+//        return new File(context.getRealPath("/WEB-INF/documents/"));  //from linux
     }
 
     public byte[] getDataDoc(String title) {
-        File file = new File(getFile().toString() + "/" + title + ".pdf");
+        File file = new File(getFile().toString() + File.separator + title + ".pdf");
         byte[] fileByte = new byte[(int) file.length()];
         try (InputStream fis = new BufferedInputStream(new FileInputStream(file))) {
             fis.read(fileByte);
@@ -43,7 +48,7 @@ public class FileOIUtils {
     }
 
     public void saveDataDoc(String fileName, Part data) {
-        file = new File(getFile().toString() + "/" + fileName + ".pdf");
+        file = new File(getFile().toString() + File.separator + fileName + ".pdf");
 
         try (InputStream inputStream = data.getInputStream()) {
             FileUtils.writeByteArrayToFile(file, IOUtils.toByteArray(inputStream));
@@ -59,7 +64,7 @@ public class FileOIUtils {
     }
 
     public boolean deleteDataDoc(String fileName) {
-        file = new File(getFile().toString() + "/" + fileName + ".pdf");
+        file = new File(getFile().toString() + File.separator + fileName + ".pdf");
         return file.delete();
     }
 

@@ -20,6 +20,10 @@
                     <c:if test="${not flagUpdate}">
                         <button type="submit" class="btn btn-default">Добавить</button>
                     </c:if>
+
+                    <div class="form-group">
+                        <input type="checkbox" name="sendMessage" value="true">Отослать сообщение?
+                    </div>
                 </div>
             </div>
 

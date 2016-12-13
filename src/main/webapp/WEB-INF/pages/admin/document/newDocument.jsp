@@ -39,6 +39,10 @@
 
                 </div>
 
+                <div class="form-group">
+                    <input type="checkbox" name="sendMessage" value="true">Отослать сообщение?
+                </div>
+
                 <br>
 
                 <button type="submit" class="btn btn-default">

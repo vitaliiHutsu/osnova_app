@@ -18,6 +18,7 @@ import ua.vesa.osnova.user.model.User;
 import ua.vesa.osnova.user.service.UserService;
 import ua.vesa.osnova.utils.FileOIUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import javax.validation.Valid;
 import java.util.GregorianCalendar;
@@ -77,7 +78,7 @@ public class AdminDocumentController {
 
     @RequestMapping(value = "/addNewDocument/{id}", method = RequestMethod.POST)
     public ModelAndView addNewDocument(@ModelAttribute("document") @Valid Document document,
-                                       BindingResult result,
+                                       BindingResult result, HttpServletRequest request,
                                        @RequestParam(value = "file", required = false) Part file) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
@@ -106,17 +107,19 @@ public class AdminDocumentController {
                 informTableService.add(informTable);
 
 
-                final String msg = "Добавлен новый документ категории " + document.getCategory().getTitle() + "\n"
-                        + document.getTitle();
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (User user : userService.getAll()) {
-                            mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                if (Boolean.valueOf(request.getParameter("sendMessage"))){
+                    final String msg = "Добавлен новый документ категории " + document.getCategory().getTitle() + "\n"
+                            + document.getTitle();
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (User user : userService.getAll()) {
+                                mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+                            }
                         }
-                    }
-                });
-                thread.start();
+                    });
+                    thread.start();
+                }
 
                 modelAndView.setViewName("redirect:/admin/document");
 

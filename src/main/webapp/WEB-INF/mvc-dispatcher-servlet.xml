@@ -3,7 +3,6 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 
         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,9 +10,7 @@
         http://www.springframework.org/schema/mvc
 	    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 	    http://www.springframework.org/schema/tx
-	    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-	    http://www.springframework.org/schema/util
-	    http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <context:component-scan base-package="ua.vesa.osnova"/>
     <mvc:annotation-driven/>
