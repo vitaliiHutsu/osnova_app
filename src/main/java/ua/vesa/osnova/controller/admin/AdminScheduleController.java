@@ -16,11 +16,14 @@ import ua.vesa.osnova.schedule.service.RouteTrainService;
 import ua.vesa.osnova.schedule.service.ScheduleService;
 import ua.vesa.osnova.speed.station.model.Station;
 import ua.vesa.osnova.speed.station.service.StationService;
+import ua.vesa.osnova.threads.ScheduleEditThread;
 import ua.vesa.osnova.user.model.User;
 import ua.vesa.osnova.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -311,42 +314,62 @@ public class AdminScheduleController {
         for (int i = 0; i < schedule.getDepartureAndArrivals().size(); i++) {
             schedule.getDepartureAndArrivals().get(i).setStation(stationTmp.get(i));
         }
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date;
+//            Date date = new Date(new Date().getTime() + 60000);
+        try {
+            date = format.parse(request.getParameter("update"));
+        } catch (ParseException e) {
+            date = null;
+        }
+
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/schedule");
         editScheduleTmp.setDepartureAndArrivals(schedule.getDepartureAndArrivals());
         editScheduleTmp.setNotation(schedule.getNotation());
         editScheduleTmp.setNumber_train(schedule.getNumber_train());
-        scheduleService.update(editScheduleTmp);
-        InformTable informTable = informTableService.getByTitle((String.valueOf(editScheduleTmp.getId())));
-        if (informTable != null)
-            informTableService.remove(informTable);
-        informAdd(Boolean.valueOf(request.getParameter("sendMessage")));
+
+        ScheduleEditThread scheduleEditThread = new ScheduleEditThread(editScheduleTmp, scheduleService, date);
+        scheduleEditThread.setSendUser(Boolean.valueOf(request.getParameter("sendMessage")));
+        scheduleEditThread.setInformTableService(informTableService);
+        scheduleEditThread.setMailUtil(mailUtil);
+        scheduleEditThread.setUserService(userService);
+        Thread thread = new Thread(scheduleEditThread);
+        thread.start();
+
+//        InformTable informTable = informTableService.getByTitle((String.valueOf(editScheduleTmp.getId())));
+//        if (informTable != null)
+//            informTableService.remove(informTable);
+//        informAdd(Boolean.valueOf(request.getParameter("sendMessage")));
+        System.out.println(request.getParameter("update"));
         return modelAndView;
 
     }
 
-    private void informAdd(boolean b) {
-        informTable = new InformTable();
-        final String msg = "изменения в расписании п. № " + editScheduleTmp.getNumber_train();
-        informTable.setAction(msg);
-        informTable.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
-        informTable.setTitle(String.valueOf(editScheduleTmp.getId()));
-        informTable.setName_table(TableNameApp.SCHEDULE_TABLE);
-        informTableService.add(informTable);
-
-        if(b) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (User user : userService.getAll()) {
-                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
-                    }
-                }
-            });
-            thread.start();
-        }
-
-
-    }
+//    private void informAdd(boolean b) {
+//        informTable = new InformTable();
+//        final String msg = "изменения в расписании п. № " + editScheduleTmp.getNumber_train();
+//        informTable.setAction(msg);
+//        informTable.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
+//        informTable.setTitle(String.valueOf(editScheduleTmp.getId()));
+//        informTable.setName_table(TableNameApp.SCHEDULE_TABLE);
+//        informTableService.add(informTable);
+//
+//        if(b) {
+//            Thread thread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    for (User user : userService.getAll()) {
+//                        mailUtil.sendMail(AdminController.E_MAIL, user.getEmail(), AdminController.TITLE, msg);
+//                    }
+//                }
+//            });
+//            thread.start();
+//        }
+//
+//
+//    }
 
     @RequestMapping(value = "/deleteSchedule/{id}", method = RequestMethod.GET)
     public ModelAndView removeSchedule(@PathVariable("id") int id) {

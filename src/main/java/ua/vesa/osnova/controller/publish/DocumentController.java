@@ -10,10 +10,8 @@ import ua.vesa.osnova.document.model.Document;
 import ua.vesa.osnova.document.service.CategoryService;
 import ua.vesa.osnova.document.service.DocumentService;
 import ua.vesa.osnova.utils.FileOIUtils;
-import ua.vesa.osnova.utils.Translit;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/document")

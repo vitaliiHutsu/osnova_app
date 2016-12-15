@@ -24,6 +24,11 @@
                     <div class="form-group">
                         <input type="checkbox" name="sendMessage" value="true">Отослать сообщение?
                     </div>
+
+                    <div class="form-group">
+                        <label for="dateUpdate">Когда обновить?</label>
+                        <input type="date" name="update" pattern="\d{1,2}/\d{1,2}/\d{4}" id="dateUpdate">
+                    </div>
                 </div>
             </div>
 
