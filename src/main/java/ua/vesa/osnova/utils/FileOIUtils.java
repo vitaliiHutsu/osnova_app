@@ -32,8 +32,8 @@ public class FileOIUtils {
 //        return new File(context.getRealPath("/WEB-INF/documents/"));  //from linux
     }
 
-    public byte[] getDataDoc(String title) {
-        File file = new File(getFile().toString() + File.separator + title + ".pdf");
+    public byte[] getDataDoc(String title, String path) {
+        File file = new File(getFile().toString() + File.separator + path + File.separator + title);
         byte[] fileByte = new byte[(int) file.length()];
         try (InputStream fis = new BufferedInputStream(new FileInputStream(file))) {
             fis.read(fileByte);
@@ -47,8 +47,8 @@ public class FileOIUtils {
         return fileByte;
     }
 
-    public void saveDataDoc(String fileName, Part data) {
-        file = new File(getFile().toString() + File.separator + fileName + ".pdf");
+    public void saveDataDoc(String fileName, Part data, String path) {
+        file = new File(getFile().toString() + File.separator + path + File.separator + fileName);
 
         try (InputStream inputStream = data.getInputStream()) {
             FileUtils.writeByteArrayToFile(file, IOUtils.toByteArray(inputStream));
@@ -63,8 +63,8 @@ public class FileOIUtils {
         }
     }
 
-    public boolean deleteDataDoc(String fileName) {
-        file = new File(getFile().toString() + File.separator + fileName + ".pdf");
+    public boolean deleteDataDoc(String fileName, String path) {
+        file = new File(getFile().toString() + File.separator + path + File.separator + fileName);
         return file.delete();
     }
 

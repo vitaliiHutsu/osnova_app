@@ -44,6 +44,8 @@ public class AdminDocumentController {
 
     private Category category;
 
+    public static final String PDF_PATH = "pdf";
+
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
@@ -89,7 +91,7 @@ public class AdminDocumentController {
 
         if (!(file.getSize() == 0)) {
             try {
-                String uuid = UUID.randomUUID().toString();
+                String uuid = UUID.randomUUID().toString() + ".pdf";
                 fileOIUtils.validatePdf(file);
                 document.setUuid(uuid);
                 document.setTitle(document.getTitle().toLowerCase());
@@ -97,7 +99,7 @@ public class AdminDocumentController {
                 document.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
                 document.setCategory(category);
                 documentService.add(document);
-                fileOIUtils.saveDataDoc(uuid, file);
+                fileOIUtils.saveDataDoc(uuid, file, PDF_PATH);
                 InformTable informTable = new InformTable();
                 informTable.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
                 informTable.setName_table(TableNameApp.DOCUMENT);
@@ -146,7 +148,7 @@ public class AdminDocumentController {
     public ModelAndView delete(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/document");
         Document document = documentService.getById(id);
-        fileOIUtils.deleteDataDoc(document.getUuid());
+        fileOIUtils.deleteDataDoc(document.getUuid() + ".pdf", PDF_PATH);
         documentService.remove(document);
         InformTable informTable = informTableService.getByUUID(document.getUuid());
         if (informTable != null)

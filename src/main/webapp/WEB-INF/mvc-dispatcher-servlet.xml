@@ -34,6 +34,7 @@
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
         <property name="validationQuery" value="SELECT 1"/>
+
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -92,6 +93,20 @@
     <bean id="mailUtil" class="ua.vesa.osnova.mail.MailUtil">
         <property name="mailSender" ref="mailSender"/>
     </bean>
+
+    <!--JSON-->
+
+    <bean id="jsonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
 
 
 </beans>

@@ -5,7 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ua.vesa.osnova.controller.admin.AdminSpeedController;
+import ua.vesa.osnova.controller.admin.service.TraStationService;
+import ua.vesa.osnova.speed.TRAStation.model.TRAModel;
+import ua.vesa.osnova.speed.TRAStation.service.TRAService;
 import ua.vesa.osnova.speed.route_speed.model.RouteSpeed;
 import ua.vesa.osnova.speed.route_speed.service.RouteSpeedService;
 import ua.vesa.osnova.speed.stage.model.Stage;
@@ -13,7 +18,9 @@ import ua.vesa.osnova.speed.stage.service.StageService;
 import ua.vesa.osnova.speed.station.model.Station;
 import ua.vesa.osnova.speed.station.service.StationService;
 import ua.vesa.osnova.speed.utils.StageUtils;
+import ua.vesa.osnova.utils.FileOIUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,8 +36,13 @@ public class SpeedController {
     private List<RouteSpeed> routeSpeedList;
     @Autowired
     private StationService stationService;
+    @Autowired
+    private FileOIUtils fileOIUtils;
 
     private boolean flag;
+
+    @Autowired
+    private TRAService traService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(){
@@ -71,5 +83,17 @@ public class SpeedController {
         modelAndView.addObject("routeSpeedList", routeSpeedList);
         modelAndView.addObject("flag", flag);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/imageStation/{path}", method = RequestMethod.GET)
+    public void getImgStation(@PathVariable("path") String path, HttpServletResponse response){
+        fileOIUtils.streamReport(response, fileOIUtils.getDataDoc((path+".jpg"), TraStationService.IMG_STATION_PATH), path, false);
+    }
+
+    @RequestMapping(value = "/service/traStation/{id}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    TRAModel get(@PathVariable int id) {
+        return traService.getTitleByIdStation(id);
     }
 }

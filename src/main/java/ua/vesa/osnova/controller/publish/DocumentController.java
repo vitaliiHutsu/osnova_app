@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.vesa.osnova.controller.admin.AdminDocumentController;
 import ua.vesa.osnova.document.model.Document;
 import ua.vesa.osnova.document.service.CategoryService;
 import ua.vesa.osnova.document.service.DocumentService;
@@ -44,7 +45,7 @@ public class DocumentController {
     @RequestMapping(value = "/viewDocument/{uuid}", method = RequestMethod.GET)
     public void viewDocument(@PathVariable("uuid") String uuid, HttpServletResponse response) {
         Document document = documentService.getByUUID(uuid);
-        fileOIUtils.streamReport(response, fileOIUtils.getDataDoc(uuid),
+        fileOIUtils.streamReport(response, fileOIUtils.getDataDoc(uuid + ".pdf", AdminDocumentController.PDF_PATH),
                 (document.getTitle() + ".pdf"), false);
     }
 }

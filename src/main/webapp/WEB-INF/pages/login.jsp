@@ -60,7 +60,7 @@
                                 <label for="inputPassword3" class="col-sm-2 control-label">password:</label>
                                 <div class="col-sm-10">
                                     <input autocomplete="off" type="password" name="password" class="form-control" id="inputPassword3"
-                                           placeholder="Password">
+                                          r placeholder="Password">
                                 </div>
                             </div>
 

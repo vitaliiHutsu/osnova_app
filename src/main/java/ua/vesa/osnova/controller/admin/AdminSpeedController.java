@@ -10,6 +10,8 @@ import ua.vesa.osnova.info.model.InformTable;
 import ua.vesa.osnova.info.service.InformTableService;
 //import ua.vesa.osnova.document.other_pdf.model.OtherDoc;
 import ua.vesa.osnova.mail.MailUtil;
+import ua.vesa.osnova.speed.TRAStation.model.TRAModel;
+import ua.vesa.osnova.speed.TRAStation.service.TRAService;
 import ua.vesa.osnova.speed.route_speed.model.RouteSpeed;
 import ua.vesa.osnova.speed.route_speed.service.RouteSpeedService;
 import ua.vesa.osnova.speed.stage.model.Stage;
@@ -19,8 +21,11 @@ import ua.vesa.osnova.speed.station.service.StationService;
 import ua.vesa.osnova.speed.utils.StageUtils;
 import ua.vesa.osnova.user.model.User;
 import ua.vesa.osnova.user.service.UserService;
+import ua.vesa.osnova.utils.FileOIUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -29,6 +34,8 @@ import java.util.*;
 public class AdminSpeedController {
     @Autowired
     private StationService stationService;
+    @Autowired
+    private TRAService traService;
     private Station station;
     private List<Station> listStations;
     private List<Station> routeListStations;
@@ -45,6 +52,9 @@ public class AdminSpeedController {
     private MailUtil mailUtil;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FileOIUtils fileOIUtils;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
@@ -124,12 +134,12 @@ public class AdminSpeedController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/deleteStation", method = RequestMethod.POST)
-    public ModelAndView deleteStation(@ModelAttribute("station") Station station) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/admin/speed");
-        stationService.delete(this.station);
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/deleteStation", method = RequestMethod.POST)
+//    public ModelAndView deleteStation(@ModelAttribute("station") Station station) {
+//        ModelAndView modelAndView = new ModelAndView("redirect:/admin/speed");
+//        stationService.delete(this.station);
+//        return modelAndView;
+//    }
 
     @RequestMapping(value = "/newRouteSpeed", method = RequestMethod.GET)
     public ModelAndView newRouteSpeed() {
@@ -295,4 +305,27 @@ public class AdminSpeedController {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/speed/newRouteSpeed");
         return modelAndView;
     }
+
+//    @RequestMapping(value = "addImgStation", method = RequestMethod.POST)
+//    public @ResponseBody String addImgStation(@RequestParam(value = "fileIMG", required = false) Part fileIMG,
+//                                              HttpServletRequest req){
+//
+//
+//        if (fileIMG.getContentType().equals("image/jpeg") || fileIMG.getContentType().equals("image/png")){
+//
+//            String uuid = UUID.randomUUID().toString() + ".jpg";
+//            fileOIUtils.saveDataDoc(uuid, fileIMG, IMG_STATION_PATH);
+//            Station station = stationService.getById(Integer.valueOf(req.getParameter("idStation")));
+//            TRAModel traModel = new TRAModel();
+//            traModel.setStation(station);
+//            traModel.setTitle(uuid);
+//            traModel.setData(new Date().getTime());
+//            traService.add(traModel);
+//            System.out.println("OOOKKK");
+//
+//        }else {
+//            return "error";
+//        }
+//        return "ok";
+//    }
 }

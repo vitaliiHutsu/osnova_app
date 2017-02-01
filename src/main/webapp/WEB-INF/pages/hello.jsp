@@ -2,10 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<spring:url value="/resources/js/jquery-2.2.1.js" var="jquery"/>
-<spring:url value="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" var="bootjs"/>
-<script src="${bootjs}"></script>
-<script src="${jquery}"></script>
 <jsp:include page="Header.jsp"/>
 <div class="container-fluid">
     <div class="row">

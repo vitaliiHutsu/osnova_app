@@ -2,8 +2,15 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" charset="UTF-8">
+    <%@include file="../../resources/js/jquery-3.1.1.min.js"%>
+</script>
+<script type="text/javascript" charset="UTF-8">
+    <%@include file="../../resources/js/getImgTra.js"%>
+</script>
 <jsp:include page="../Header.jsp"/>
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -97,7 +104,30 @@
                         <c:forEach items="${routeSpeed.stations}" var="station" varStatus="status">
                             <tr>
                                 <td>
-                                    <p class="station-title">${station.title_station}</p>
+                                    <p class="station-title"><a href="#" id="_${station.id}"
+                                                                data-toggle='modal' data-target='.pop-up-${station.id}'>
+                                            ${station.title_station}</a>
+                                    <div id="modalId">
+                                        <div class="modal fade pop-up-${station.id}" tabindex="-1" role="dialog"
+                                             aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h4 class="modal-title" id="myLargeModalLabel-1">${station.title_station}</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="" class="img-responsive img-rounded center-block imgTag-${station.id}"
+                                                             alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p>
+
                                         ${station.km_pk}
                                 </td>
                                 <td>${station.speed_chief_odd_pass}</td>

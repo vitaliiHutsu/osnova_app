@@ -1,12 +1,12 @@
 package ua.vesa.osnova.speed.station.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.vesa.osnova.schedule.model.DepartureAndArrival;
 import ua.vesa.osnova.schedule.model.RouteSchedule;
+import ua.vesa.osnova.speed.TRAStation.model.TRAModel;
 import ua.vesa.osnova.speed.route_speed.model.RouteSpeed;
 import ua.vesa.osnova.speed.station.valid.StationValid;
 
@@ -14,7 +14,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "station_speed")
@@ -226,4 +228,5 @@ public class Station implements Serializable {
                 ", notation='" + notation + '\'' +
                 '}';
     }
+
 }
