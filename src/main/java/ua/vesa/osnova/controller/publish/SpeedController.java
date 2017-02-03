@@ -94,6 +94,7 @@ public class SpeedController {
     public
     @ResponseBody
     TRAModel get(@PathVariable int id) {
-        return traService.getTitleByIdStation(id);
+          return traService.getTitleByIdStation(id);
+
     }
 }

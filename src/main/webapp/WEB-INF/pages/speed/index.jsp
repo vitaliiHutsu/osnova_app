@@ -117,15 +117,18 @@
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-hidden="true">×
                                                         </button>
-                                                        <h4 class="modal-title" id="myLargeModalLabel-1">${station.title_station}</h4>
+                                                        <h4 class="modal-title"
+                                                            id="myLargeModalLabel-1">${station.title_station}</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <img src="" class="img-responsive img-rounded center-block imgTag-${station.id}"
+                                                        <img src="../../resources/images/load.gif"
+                                                             class="img-responsive img-rounded center-block imgTag-${station.id}"
                                                              alt="">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </p>
 
                                         ${station.km_pk}
