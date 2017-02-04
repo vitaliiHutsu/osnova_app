@@ -99,7 +99,7 @@ public class AdminDocumentController {
                 document.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
                 document.setCategory(category);
                 documentService.add(document);
-                fileOIUtils.saveDataDoc(uuid, file, PDF_PATH);
+                fileOIUtils.saveDataDoc(uuid + ".pdf", file, PDF_PATH);
                 InformTable informTable = new InformTable();
                 informTable.setDate_add(GregorianCalendar.getInstance().getTimeInMillis());
                 informTable.setName_table(TableNameApp.DOCUMENT);

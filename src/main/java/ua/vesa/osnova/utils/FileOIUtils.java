@@ -48,7 +48,7 @@ public class FileOIUtils {
     }
 
     public void saveDataDoc(String fileName, Part data, String path) {
-        file = new File(getFile().toString() + File.separator + path + File.separator + fileName+".pdf");
+        file = new File(getFile().toString() + File.separator + path + File.separator + fileName);
 
         try (InputStream inputStream = data.getInputStream()) {
             FileUtils.writeByteArrayToFile(file, IOUtils.toByteArray(inputStream));
