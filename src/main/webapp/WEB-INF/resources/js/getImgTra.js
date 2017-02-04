@@ -1,6 +1,4 @@
-/**
- * Created by vesa-pk on 31.01.2017.
- */
+
 $(document).ready(function () {
 
     $(".station-title").click(function (event) {

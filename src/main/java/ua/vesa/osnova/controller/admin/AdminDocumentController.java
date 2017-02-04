@@ -91,7 +91,7 @@ public class AdminDocumentController {
 
         if (!(file.getSize() == 0)) {
             try {
-                String uuid = UUID.randomUUID().toString() + ".pdf";
+                String uuid = UUID.randomUUID().toString();
                 fileOIUtils.validatePdf(file);
                 document.setUuid(uuid);
                 document.setTitle(document.getTitle().toLowerCase());
