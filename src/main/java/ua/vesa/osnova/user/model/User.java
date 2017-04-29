@@ -1,6 +1,7 @@
 package ua.vesa.osnova.user.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import ua.vesa.osnova.user.valid.UserEmailValid;
 import ua.vesa.osnova.user.valid.UserNameValid;
 
@@ -37,6 +38,8 @@ public class User implements Serializable {
     @Size(min = 10, max = 18, message = "некорректный телефон")
     private String phone;
 
+    @NotEmpty
+    @NotNull
     @Email(message = "некорректный e-mail")
     @UserEmailValid
     private String email;

@@ -82,10 +82,13 @@
         <property name="username" value="osnova.depo" />
         <property name="password" value="353871985" />
 
+        <property name="defaultEncoding" value="UTF-8"/>
+
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.auth">true</prop>
                 <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.mime.charset">UTF-8</prop>
             </props>
         </property>
     </bean>
