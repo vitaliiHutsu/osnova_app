@@ -15,12 +15,13 @@ import ua.vesa.osnova.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 @RequestMapping("/")
 public class HelloController {
 
-    public static int countVisit ;
+
 
     @Autowired
     private InformTableService informTableService;
@@ -33,12 +34,13 @@ public class HelloController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView printWelcome() {
-        countVisit++;
+
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("listInform", informTableService.getAll());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        System.out.println(name);
+
+
         return modelAndView;
     }
 
