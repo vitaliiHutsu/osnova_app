@@ -22,9 +22,9 @@ a{
 
 }
 
-input{
-    text-transform: lowercase !important;
-}
+/*input{*/
+    /*text-transform: lowercase !important;*/
+/*}*/
 header a:hover{
     color: silver !important;
 }
